@@ -1,0 +1,22 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="col h1 text-center font-italic mt-5 mb-2" style="font-family: 'Lobster', sans-serif;"> Наши работы</div>
+		</div>
+	</div>
+	<div class="portfolio">
+		{% for item in portfolio %}
+		<div class="portfolio_block">
+			<h2 id="{{ item.service_id }}">{{ item.service_id.service_name }}</h2>
+			<div class="portfolio_container">
+				<div><img src="/media/{{ item.img_1 }}" alt=""></div>
+				<div><img src="/media/{{ item.img_2 }}" alt=""></div>
+				{% if item.img_3 %}<div><img src="/media/{{ item.img_3 }}" alt=""></div>{% endif %}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+{% endblock %}

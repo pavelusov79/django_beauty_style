@@ -1,0 +1,77 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+{% if news %}
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-12 col-sm-8 col-md-9 about_h1">
+				<h1 class="text-center mb-3">Добро пожаловать в салон красоты Beauty
+					Style</h1>
+				<p class="text-center about-text">Lorem ipsum dolor sit amet, consectetur
+					adipisicing elit.
+					Repellat esse delectus deserunt placeat, vero quae reprehenderit tenetur? Impedit voluptatem asperiores, commodi, quae
+					cum vero optio, beatae quas suscipit nihil, deleniti itaque placeat iure recusandae?
+					Modi ex soluta totam, excepturi quidem suscipit. Nesciunt delectus, velit excepturi
+					minus deserunt consequuntur saepe quis ullam, voluptatum repudiandae nulla praesentium
+					laborum libero error eum amet maiores illum laboriosam quos reiciendis harum officia.
+					Corporis minus saepe error veritatis reiciendis. Accusantium nemo doloribus commodi, ut.
+					Ea culpa odit incidunt tenetur delectus, quam vel laudantium ducimus non quaerat quos
+					quisquam ut? Rem natus numquam saepe similique, error repellendus!</p>
+			</div>
+			<div class="col-10 col-sm-4 col-md-3 news_col">
+				<h3 class="text-center mb-3 mt-2 font-italic"><a href="{% url 'news' %}">Акции и новости</a></h3>
+				{% for item in news %}
+				<div class="pl-3 mb-3">{{ item.published|date:"d.m.y" }}  <span> {{ item.title}} </span>
+					<a href="{% url 'news' %}#{{ item.id }}"><small class="text-muted">
+					подробнее...</small></a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% else %}
+	<div class="about">
+		<h1>Добро пожаловать в салон красоты Beauty Style</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat esse delectus deserunt
+			placeat, vero quae reprehenderit tenetur? Impedit voluptatem asperiores, commodi, quae
+			cum vero optio, beatae quas suscipit nihil, deleniti itaque placeat iure recusandae?
+			Modi ex soluta totam, excepturi quidem suscipit. Nesciunt delectus, velit excepturi
+			minus deserunt consequuntur saepe quis ullam, voluptatum repudiandae nulla praesentium
+			laborum libero error eum amet maiores illum laboriosam quos reiciendis harum officia.
+			Corporis minus saepe error veritatis reiciendis. Accusantium nemo doloribus commodi, ut.
+			Ea culpa odit incidunt tenetur delectus, quam vel laudantium ducimus non quaerat quos
+			quisquam ut? Rem natus numquam saepe similique, error repellendus!</p>
+	</div>
+{% endif %}
+	<div class="cont">
+		<h1>Наши услуги</h1>
+	</div>
+	<div class="main">
+		{% for item in service %}
+		<div class="box">
+			<a href="{% url 'services' %}#{{ item.service_id }}"><img
+					src="/media/{{ item.img_1 }}" alt="img"></a>
+			<p>{{ item.service_name }}</p>
+		</div>
+		{% endfor %}
+	</div>
+	<hr>
+	<div class="cont">
+		<h1>Наши мастера</h1>
+	</div>
+	<div class="masters">
+		{% for master in masters  %}
+		<div class="photo">
+			{% if master.photo %}
+			<img src="/media/{{ master.photo }}" alt="фото {{master.name}}">
+			{% else %}
+			<img src="{% static 'img/master.png' %}" alt="фото {{master.name}}">
+			{% endif %}
+			<h2>{{ master.name }}</h2>
+			<h3>{{ master.master_specialization }}</h3>
+			<p class="masters_text">{{ master.greeting }}</p>
+		</div>
+		{% endfor %}
+	</div>
+{% endblock %}

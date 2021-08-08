@@ -1,0 +1,6 @@
+<option value="">---------</option>
+{% for item in time_set %}
+{% if item.time not in time_busy %}
+<option value="{{ item.pk }}">{{ item.time }}</option>
+{% endif %}
+{% endfor %}

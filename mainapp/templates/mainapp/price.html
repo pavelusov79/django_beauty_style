@@ -1,0 +1,23 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+	<div class="price">
+		{% for item in service %}
+		<div class="price_block">
+			<h2 id="{{ item.service_id }}">{{ item.service_name }}</h2>
+			<div class="price_container">
+				<div><img src="/media/{{ item.img_2 }}" alt="img"></div>
+				<p>{{ item.service_description }}</p>
+			</div>
+			<p class="price_text"><strong>
+				{% now "Y-m-d" as today_date %}
+				Стоимость услуги
+					{% if item.discount > 0 and item.finished|date:"Y-m-d" > today_date %}
+					<s class="text-muted">{{ item.price }}</s> <span style="color:red">
+				{{ item.discount_price }} </span> руб.
+					{% else %} {{ item.price }} руб.{% endif %}</strong></p>
+		</div>
+		{% endfor %}
+	</div>
+{% endblock %}
