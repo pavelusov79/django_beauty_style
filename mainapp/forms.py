@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+import datetime
 
 from django import forms
 from django.core.validators import RegexValidator
@@ -55,7 +55,7 @@ class ContactForm(forms.ModelForm):
         if 'date_field' in self.data:
             try:
                 date_field = self.data.get('date_field')
-                date_field = datetime.strptime(date_field, '%Y-%m-%d')
+                date_field = datetime.datetime.strptime(date_field, '%Y-%m-%d')
                 date = date_field.weekday()
                 self.fields['time_field'].queryset = Time.objects.filter(workdays__days=date)
             except (ValueError, TypeError):
@@ -63,18 +63,21 @@ class ContactForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(ContactForm, self).clean()
-        date_field = cleaned_data['date_field']
-        time_field = cleaned_data['time_field']
-        date_field = datetime.strptime(str(date_field), '%Y-%m-%d')
-        res = date_field - datetime.now()
-        delta = timedelta(days=14)
-        if date_field.date() < datetime.now().date():
-            raise forms.ValidationError({'date_field': 'Выбранная вами дата не может быть раньше текущей'})
-        if res > delta:
-            raise forms.ValidationError({'date_field': 'Эллектронная запись доступна только в пределах двух недель. Для более поздней записи свяжитесь с нами по телефону.'})
-        if date_field.date() == datetime.now().date():
-            if str(time_field) < datetime.now().strftime('%H:%M'):
-                raise forms.ValidationError({'time_field': 'Час на которой вы планируете записаться уже прошел. Пожалуйста выберите час записи больше текущего.'})
+        date_field = cleaned_data.get('date_field')
+        time_field = cleaned_data.get('time_field')
+        if date_field:
+            res = date_field - datetime.date.today()
+            delta = datetime.timedelta(days=14)
+            if date_field < datetime.date.today():
+                raise forms.ValidationError({'date_field': 'Выбранная вами дата не может быть раньше текущей'})
+            if res > delta:
+                raise forms.ValidationError({'date_field': 'Эллектронная запись доступна только в пределах двух недель. Для более поздней записи свяжитесь с нами по телефону.'})
+        if date_field and time_field:
+            if date_field == datetime.date.today():
+                if str(time_field) < datetime.datetime.now().strftime('%H:%M'):
+                    raise forms.ValidationError({'time_field': 'Час на которой вы планируете записаться уже прошел. Пожалуйста выберите час записи больше текущего.'})
+        return cleaned_data
+
 
 
 

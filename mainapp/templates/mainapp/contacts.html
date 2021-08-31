@@ -1,5 +1,6 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
+{% load cache %}
 
 {% block content %}
 	<div class="text">
@@ -23,7 +24,9 @@
 		{% endif %}
 		<div class="direction">
 			<p>Схема проезда</p>
+			{% cache 3600 frame %}
 			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2903.827287109343!2d132.06092421540058!3d43.296938483412646!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5fb3bc9f77fcf35d%3A0x6cbdef3410a5694f!2sUlitsa+Lermontova%2C+85%D0%B2%2C+Vladivostok%2C+Primorskiy+kray%2C+690912!5e0!3m2!1sen!2sru!4v1565586539849!5m2!1sen!2sru" width="450" height="280" frameborder="0" style="border:0" allowfullscreen></iframe>
+			{% endcache %}
 		</div>
 	</div>
 {% endblock %}

@@ -17,16 +17,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+from django.views.decorators.cache import cache_page
 
 from mainapp import views
+from mainapp.views import MainView, PortfolioView, ServicesView, NewsView, ContactsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.main, name='main'),
-    path('contacts/', views.contacts, name='contacts'),
-    path('portfolio/', views.portfolio, name='portfolio'),
-    path('services/', views.services, name='services'),
-    path('news/', views.news, name='news'),
+    path('', cache_page(60*60)(MainView.as_view()), name='main'),
+    path('contacts/', ContactsView.as_view(), name='contacts'),
+    path('portfolio/', cache_page(60*60)(PortfolioView.as_view()), name='portfolio'),
+    path('services/', cache_page(60*60)(ServicesView.as_view()), name='services'),
+    path('news/', NewsView.as_view(), name='news'),
     path('ajax/load-masters/', views.load_masters, name='ajax_load_masters'),
     path('ajax/valid_fields/', views.valid_fields, name='valid_fields'),
     path('ajax/load_time/', views.load_time)
