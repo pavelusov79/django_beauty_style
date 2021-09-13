@@ -51,7 +51,7 @@
 		{% for item in service %}
 		<div class="box">
 			<a href="{% url 'services' %}#{{ item.service_id }}"><img
-					src="/media/{{ item.img_1 }}" alt="img"></a>
+					src="{{ item.img_1.url }}" alt="img"></a>
 			<p>{{ item.service_name }}</p>
 		</div>
 		{% endfor %}
@@ -64,7 +64,7 @@
 		{% for master in masters  %}
 		<div class="photo">
 			{% if master.photo %}
-			<img src="/media/{{ master.photo }}" alt="фото {{master.name}}">
+			<img src="{{ master.photo.url }}" alt="фото {{master.name}}">
 			{% else %}
 			<img src="{% static 'img/master.png' %}" alt="фото {{master.name}}">
 			{% endif %}

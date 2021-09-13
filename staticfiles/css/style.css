@@ -548,9 +548,7 @@ form input, form select {
 .portfolio_container div img:hover {
 	transform: scale(1.7);
 }
-.portfolio_block {
-	/*height: 400px;*/
-}
+
 .portfolio_container {
 	width: 90%;
 	display: flex;

@@ -262,7 +262,7 @@ nav a:hover {
 	font-family: 'Lobster', sans-serif;
 	font-weight: 300;
 	margin-top: 30px;
-	margin-bottom: 30px;i
+	margin-bottom: 30px;
 	letter-spacing: 4px;
 }
 .masters h1 {
@@ -548,9 +548,7 @@ form input, form select {
 .portfolio_container div img:hover {
 	transform: scale(1.7);
 }
-.portfolio_block {
-	/*height: 400px;*/
-}
+
 .portfolio_container {
 	width: 90%;
 	display: flex;
