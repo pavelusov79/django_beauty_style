@@ -71,11 +71,13 @@ class ContactForm(forms.ModelForm):
             if date_field < datetime.date.today():
                 raise forms.ValidationError({'date_field': 'Выбранная вами дата не может быть раньше текущей'})
             if res > delta:
-                raise forms.ValidationError({'date_field': 'Эллектронная запись доступна только в пределах двух недель. Для более поздней записи свяжитесь с нами по телефону.'})
+                raise forms.ValidationError({'date_field': 'Эллектронная запись доступна только в пределах двух недель.'
+                                                           ' Для более поздней записи свяжитесь с нами по телефону.'})
         if date_field and time_field:
             if date_field == datetime.date.today():
                 if str(time_field) < datetime.datetime.now().strftime('%H:%M'):
-                    raise forms.ValidationError({'time_field': 'Час на которой вы планируете записаться уже прошел. Пожалуйста выберите час записи больше текущего.'})
+                    raise forms.ValidationError({'time_field': 'Час на которой вы планируете записаться уже прошел. '
+                                                               'Пожалуйста выберите час записи больше текущего.'})
         return cleaned_data
 
 
